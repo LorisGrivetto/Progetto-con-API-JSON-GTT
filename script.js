@@ -1,64 +1,72 @@
 let URL = "https://gpa.madbob.org/query.php?stop=";
 
-function aggiungiPassaggio(linea, orari) {
+
+function aggiungiPassaggio(linea, orariProgrammati, orariReali) {
     let div = document.createElement("div");
-    div.classList.add("col-12", "col-md-6", "mb-4", "text-center");
+    div.classList.add("col-12", "mb-4");
 
-    // Crea i dettagli del passaggio
-    let p1 = document.createElement("p");
-    p1.innerHTML = `<strong>Linea:</strong> ${linea}`;
-    p1.classList.add("mb-1", "fw-bold");
+    let header = document.createElement("h4");
+    header.innerHTML = `Linea: <span class="numeroLinea">${linea}</span>`;
+    div.appendChild(header);
 
-    // Mostra il numero di orari disponibili
-    let p2 = document.createElement("p");
-    p2.innerHTML = `<strong>Orari disponibili:</strong> ${orari.length}`;
-    p2.classList.add("text-secondary");
+    
+    let programmati = document.createElement("div");
+    if (orariProgrammati.length > 0) {
+        programmati.innerHTML = "<strong>Orari Programmati:</strong>";
+        orariProgrammati.forEach(orario => {
+            let span = document.createElement("span");
+            span.classList.add("orario-programmato");
+            span.textContent = orario;
+            programmati.appendChild(span);
+        });
+    } else {
+        programmati.innerHTML = "<p class='text-warning'>Nessun orario programmato disponibile</p>";
+    }
+    div.appendChild(programmati);
 
-    // Crea la lista degli orari
-    let orariList = document.createElement("ul");
-    orariList.classList.add("list-group", "text-start");
-    orari.forEach(orario => {
-        let li = document.createElement("li");
-        li.classList.add("list-group-item");
-        li.textContent = orario;
-        orariList.appendChild(li);
-    });
+  
+    let reali = document.createElement("div");
+    if (orariReali.length > 0) {
+        reali.innerHTML = "<strong>Orari Tempo Reale:</strong>";
+        orariReali.forEach(orario => {
+            let span = document.createElement("span");
+            span.classList.add("orario-tempo-reale");
+            span.textContent = orario;
+            reali.appendChild(span);
+        });
+    } else {
+        reali.innerHTML = "<p class='text-danger'>Nessun orario in tempo reale disponibile</p>";
+    }
+    div.appendChild(reali);
 
-    // Aggiungi i dettagli e la lista degli orari al contenitore
-    div.appendChild(p1);
-    div.appendChild(p2);
-    div.appendChild(orariList);
-
-    // Aggiungi il contenitore alla lista
+   
     document.getElementById("lista").appendChild(div);
 }
 
 
 function mostra(lista) {
-    // Svuota il contenitore prima di aggiungere nuovi passaggi
-    document.getElementById("lista").innerHTML = "";
-
-    // Aggiungi un messaggio se non ci sono passaggi
-    if (lista.length === 0) {
-        let div = document.createElement("div");
-        div.innerHTML = "<p class='text-danger'>Nessun passaggio trovato</p>";
-        div.classList.add("text-center");
-        document.getElementById("lista").appendChild(div);
+    document.getElementById("lista").innerHTML = ""; // Svuota lista
+    if (!lista.length) {
+        document.getElementById("lista").innerHTML = "<p class='text-danger'>Nessun passaggio trovato.</p>";
         return;
     }
 
-    // Raggruppa gli orari per linea
-    let raggruppatiPerLinea = {};
+  
+    let raggruppati = {};
     lista.forEach(passaggio => {
-        if (!raggruppatiPerLinea[passaggio.line]) {
-            raggruppatiPerLinea[passaggio.line] = [];
+        if (!raggruppati[passaggio.line]) {
+            raggruppati[passaggio.line] = { programmati: [], reali: [] };
         }
-        raggruppatiPerLinea[passaggio.line].push(passaggio.hour);
+        if (passaggio.real_time) {
+            raggruppati[passaggio.line].reali.push(passaggio.hour);
+        } else {
+            raggruppati[passaggio.line].programmati.push(passaggio.hour);
+        }
     });
 
-    // Aggiungi i risultati al DOM
-    for (let linea in raggruppatiPerLinea) {
-        aggiungiPassaggio(linea, raggruppatiPerLinea[linea]);
+    
+    for (let linea in raggruppati) {
+        aggiungiPassaggio(linea, raggruppati[linea].programmati, raggruppati[linea].reali);
     }
 }
 
@@ -71,7 +79,10 @@ function cercafermata() {
 
     fetch(URL + fermata)
         .then(response => response.json())
-        .then(data => mostra(data))
+        .then(data => {
+            console.log("Dati ricevuti:", data); 
+            mostra(data);
+        })
         .catch(error => {
             console.error("Errore nella richiesta:", error);
             alert("Si è verificato un errore. Riprova più tardi.");
