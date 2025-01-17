@@ -1,50 +1,159 @@
+
 body {
     background-image: url('https://www.guidatorino.com/wp-content/uploads/2018/09/applicazione-gtt-torino.jpg');
     background-size: cover;
     background-position: center;
     color: white;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
 }
+
 
 .container {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.85);
     border-radius: 15px;
-    padding: 20px;
-    margin-top: 40px;
+    padding: 30px;
+    margin: 60px auto;
+    max-width: 700px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.6);
+    text-align: center;
 }
+
 
 h1 {
-    font-weight: bold;
-    color: #f8c471;
+    font-weight: 700;
+    color: #f1c40f;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+    font-size: 2.8rem;
+    margin-bottom: 25px;
 }
 
+
 .input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
 }
 
-.btn-primary {
-    background-color: #3498db;
+.input-group input {
+    border: 2px solid #e67e22;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 1.1rem;
+    width: 70%;
+    margin-right: 10px;
+    box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.input-group button {
+    background: linear-gradient(145deg, #3498db, #2980b9);
+    color: white;
     border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
 }
 
-.btn-primary:hover {
-    background-color: #2980b9;
+.input-group button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
 }
 
-.list-group-item {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+.input-group button:active {
+    transform: scale(0.95);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+
+#busTable {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
     color: white;
 }
 
-img {
-    border: 3px solid #f8c471;
-    border-radius: 10px;
+#busTable th, #busTable td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
 }
 
-p, ul {
-    font-size: 1.2rem;
+#busTable th {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
 }
 
-#lista {
-    margin-top: 30px;
+
+.numeroLinea {
+    font-weight: bold;
+    background-color: #f39c12;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.numeroLinea:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.numeroLinea:active {
+    transform: scale(0.95);
+}
+
+.orario-programmato {
+    background-color: #3498db;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: inline-block;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.orario-tempo-reale {
+    background-color: #2ecc71;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px 10px;
+    display: inline-block;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+
+footer {
+    margin-top: 50px;
+    padding: 15px;
+    background: #222;
+    color: #aaa;
+    font-size: 0.9rem;
+    text-align: center;
+    border-top: 1px solid #444;
+    box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.text-warning {
+    color: #f1c40f;
+}
+
+.text-danger {
+    color: #e74c3c;
 }
